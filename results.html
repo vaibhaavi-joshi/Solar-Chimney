@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Results &amp; method — Solar Chimney</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg:#06100D;
+  --surface:#0C1A15;
+  --surface-2:#112620;
+  --line:#1C3A30;
+  --line-soft:#152C25;
+  --text:#E6F1EB;
+  --muted:#8AA89B;
+  --em:#34D399;
+  --em-dim:#10B981;
+  --em-glow:#6EE7B7;
+  --warn:#F0A54A;
+  --cool:#5AA9E6;
+  --violet:#A78BFA;
+  --stone:#94A39B;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Archivo',system-ui,-apple-system,sans-serif;
+  font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--em);text-decoration:none;}
+a:hover{color:var(--em-glow);text-decoration:underline;}
+::selection{background:var(--em-dim);color:#04120C;}
+
+/* ---------- top nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(6,16,13,.93);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:22px;
+  padding:0 22px;height:56px;
+}
+.nav .brand{
+  font-weight:800;letter-spacing:-.02em;font-size:16px;
+  color:var(--text);display:flex;align-items:center;gap:9px;white-space:nowrap;
+}
+.nav .brand:hover{text-decoration:none;color:var(--text);}
+.nav .dot{width:9px;height:9px;background:var(--em);border-radius:50%;
+  box-shadow:0 0 12px var(--em);flex:none;}
+.nav .links{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap;}
+.nav .links a{
+  font-size:13px;color:var(--muted);padding:7px 13px;border-radius:2px;
+}
+.nav .links a:hover{color:var(--text);background:var(--surface-2);text-decoration:none;}
+.nav .links a[aria-current=page]{color:var(--em);background:var(--surface-2);}
+@media(max-width:620px){
+  .nav{height:auto;padding:10px 14px;flex-wrap:wrap;gap:10px;}
+  .nav .links{margin-left:0;width:100%;}
+}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:36px 22px 80px;}
+.wrap.wide{max-width:1500px;}
+.page-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:30px;}
+.page-head .eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--em);margin-bottom:9px;
+}
+h1{font-size:clamp(28px,4.2vw,46px);font-weight:800;letter-spacing:-.03em;
+  margin:0 0 8px;line-height:1.08;}
+h2{font-size:21px;font-weight:700;letter-spacing:-.02em;margin:38px 0 14px;}
+h3{font-size:16px;font-weight:600;margin:0 0 6px;}
+.lede{font-size:16.5px;color:var(--muted);max-width:66ch;margin:0;}
+p{max-width:72ch;}
+.muted{color:var(--muted);}
+
+/* ---------- cards & stats ---------- */
+.card{background:var(--surface);border:1px solid var(--line);padding:18px 20px;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0;}
+.stat{background:var(--surface);padding:16px 18px;}
+.stat .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);}
+.stat .v{font-size:32px;font-weight:800;letter-spacing:-.035em;
+  font-variant-numeric:tabular-nums;margin-top:4px;line-height:1;color:var(--em);}
+.stat .v small{font-size:14px;font-weight:500;color:var(--muted);margin-left:3px;
+  letter-spacing:0;}
+.stat .n{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4;}
+.stat.hero .v{color:var(--em-glow);}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px;}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);}
+th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);font-weight:500;
+  border-bottom:1px solid var(--line);}
+td.num{font-variant-numeric:tabular-nums;text-align:right;}
+tbody tr:hover{background:var(--surface);}
+.hl{color:var(--em);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:24px 0;background:var(--surface);border:1px solid var(--line);padding:14px;}
+figure img{width:100%;display:block;background:#fff;}
+figcaption{font-size:12.5px;color:var(--muted);margin-top:11px;line-height:1.5;}
+
+/* ---------- controls ---------- */
+.seg{display:inline-flex;border:1px solid var(--line);background:var(--surface);}
+.seg button{font-family:inherit;font-size:12.5px;padding:8px 15px;background:transparent;
+  border:none;cursor:pointer;color:var(--muted);border-right:1px solid var(--line);}
+.seg button:last-child{border-right:none;}
+.seg button:hover{color:var(--text);}
+.seg button[aria-pressed=true]{background:var(--em-dim);color:#04120C;font-weight:600;}
+input[type=range]{width:100%;accent-color:var(--em);height:18px;background:transparent;}
+input[type=range]:focus-visible{outline:2px solid var(--em);outline-offset:3px;}
+.toggle{display:flex;align-items:center;gap:8px;font-size:12.5px;margin-bottom:8px;cursor:pointer;}
+.toggle input{accent-color:var(--em);width:14px;height:14px;cursor:pointer;}
+button.btn{font-family:inherit;font-size:12.5px;padding:7px 13px;cursor:pointer;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--text);}
+button.btn:hover{border-color:var(--em-dim);color:var(--em);}
+
+/* ---------- callouts ---------- */
+.note{border-left:3px solid var(--em);background:var(--surface);
+  padding:13px 16px;margin:20px 0;font-size:14px;}
+.note.warn{border-left-color:var(--warn);}
+.note strong{color:var(--em);}
+.note.warn strong{color:var(--warn);}
+
+/* ---------- misc ---------- */
+.mono{font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
+.pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+  letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;
+  border:1px solid var(--line);color:var(--muted);}
+.pill.on{border-color:var(--em-dim);color:var(--em);}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+footer.site{border-top:1px solid var(--line);margin-top:56px;padding:22px;
+  font-size:12.5px;color:var(--muted);text-align:center;}
+ul.clean{list-style:none;padding:0;margin:14px 0;}
+ul.clean li{padding:8px 0 8px 22px;position:relative;border-bottom:1px solid var(--line-soft);
+  font-size:14px;max-width:72ch;}
+ul.clean li:before{content:"";position:absolute;left:4px;top:15px;width:6px;height:6px;
+  background:var(--em-dim);border-radius:50%;}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:22px 0;}
+
+</style>
+
+<nav class="nav">
+  <a class="brand" href="index.html"><span class="dot"></span>Solar Chimney</a>
+  <div class="links">
+    <a href="index.html">Overview</a>
+    <a href="model.html">Installation model</a>
+    <a href="progression.html">Design progression</a>
+    <a href="simulations.html">Simulations</a>
+    <a href="results.html" aria-current="page">Results &amp; method</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-head">
+    <div class="eyebrow">Modelled predictions, not measurements</div>
+    <h1>Results &amp; method</h1>
+    <p class="lede">Every figure on this site comes from one transient energy-balance model, validated against published experimental data before any design conclusion was drawn.</p>
+  </div>
+
+  <h2>The model</h2>
+  <p>A transient global energy balance with four thermal nodes — glazing, channel air, absorber plate and phase change material — plus a room node, stepped at 20&nbsp;second intervals and run to a settled day. Airflow is solved at every step by balancing stack pressure against wall friction and minor losses, so the system self-regulates: more flow means less heating, which means less buoyancy, which means less flow. The PCM uses the effective heat capacity method, so the melting plateau emerges from the physics rather than being imposed.</p>
+
+  <h2>Validation</h2>
+  <p>The model was run against published experimental setups before being used for design.</p>
+  <table>
+    <thead><tr><th>Source</th><th>Measured</th><th>Model predicts</th><th>Agreement</th></tr></thead>
+    <tbody>
+      <tr><td>Ong &amp; Chow (2003)</td><td>0.25–0.39 m/s channel velocity</td><td class="num">0.30 m/s</td><td class="hl">within range</td></tr>
+      <tr><td>Khedari et al.</td><td>8–15 air changes per hour</td><td class="num">7.1 ACH</td><td>slightly low</td></tr>
+      <tr><td>Mathur et al.</td><td>5.6 air changes per hour</td><td class="num">higher</td><td>overpredicts</td></tr>
+    </tbody>
+  </table>
+  <div class="note warn">
+    <strong>Known limitation.</strong> The model overpredicts against Mathur et al. This is stated rather than hidden; it means absolute figures should be read as indicative and comparisons between design versions are more reliable than single values.
+  </div>
+
+  <h2>Design case</h2>
+  <p>Room dimensions come from census data rather than assumption. The average rural dwelling is roughly 430–494&nbsp;sq&nbsp;ft, and in 40% of households five people share a single room. A 10&nbsp;×&nbsp;10&nbsp;ft room matches that, so the modelled space is 3&nbsp;×&nbsp;3&nbsp;m with a 2.8&nbsp;m ceiling and five occupants.</p>
+  <table>
+    <thead><tr><th>Parameter</th><th>Rural</th><th>Urban informal</th></tr></thead>
+    <tbody>
+      <tr><td>Roof</td><td>Corrugated metal sheet, uninsulated</td><td>125&nbsp;mm RCC slab</td></tr>
+      <tr><td>Thermal mass</td><td>Low</td><td>High</td></tr>
+      <tr><td>Infiltration</td><td>1.5 ACH</td><td>1.0 ACH</td></tr>
+      <tr><td>Dominant problem</td><td>Midday overheating</td><td>Night-time heat release</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Weather scenarios</h2>
+  <p>Anchored to IMD climatology and official heatwave definitions, so the assumptions are checkable.</p>
+  <table>
+    <thead><tr><th>Scenario</th><th class="num">Max</th><th class="num">Min</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Normal summer day</td><td class="num">39.5&nbsp;°C</td><td class="num">27.5&nbsp;°C</td><td>Climatological mean for May–June</td></tr>
+      <tr><td>Hot day</td><td class="num">44.0&nbsp;°C</td><td class="num">31.0&nbsp;°C</td><td>Meets IMD heatwave threshold</td></tr>
+      <tr><td>Extreme day</td><td class="num">47.0&nbsp;°C</td><td class="num">35.0&nbsp;°C</td><td>Severe heatwave; night matches Delhi record of 35.2&nbsp;°C</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Headline results</h2>
+  <p>Indoor temperature reduction against the same room with no chimney fitted, at the final 3.0&nbsp;m² design.</p>
+  <table>
+    <thead><tr><th>Scenario</th><th class="num">Rural peak</th><th class="num">Rural night</th><th class="num">Urban peak</th><th class="num">Urban night</th></tr></thead>
+    <tbody>
+      <tr><td>Normal</td><td class="num">9.0 K</td><td class="num">2.6 K</td><td class="num">3.0 K</td><td class="num">7.0 K</td></tr>
+      <tr><td>Hot</td><td class="num">10.2 K</td><td class="num">2.5 K</td><td class="num">3.2 K</td><td class="num">7.0 K</td></tr>
+      <tr><td>Extreme</td><td class="num hl">11.5 K</td><td class="num">2.3 K</td><td class="num">3.9 K</td><td class="num hl">6.7 K</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <strong>The benefit grows as conditions worsen.</strong> Rural daytime relief rises from 9.0&nbsp;K on a normal day to 11.5&nbsp;K in a severe heatwave. A hotter absorber produces a larger temperature difference and therefore a stronger draft — the self-regulating loop working in the system's favour.
+  </div>
+
+  <h2>Design progression</h2>
+  <figure>
+    <img src="P1_progression.png" alt="Bar chart of indoor temperature reduction across four design versions for rural and urban housing">
+    <figcaption>Four iterations under identical conditions. V1 was sized by hand; V2 showed collector area dominates; V3 found a shorter, wider geometry performs better; V4 adds a reflective roof coating rather than changing the chimney.</figcaption>
+  </figure>
+  <figure>
+    <img src="P2_height_vs_performance.png" alt="Scatter plot of height above roofline against peak temperature reduction">
+    <figcaption>The counterintuitive result. Friction losses scale with channel length over hydraulic diameter, so widening the collector cuts resistance faster than lowering it costs stack pressure. V3 is half the height of V2, uses a third less material, and performs slightly better.</figcaption>
+  </figure>
+  <figure>
+    <img src="P3_temperature_curves.png" alt="Indoor temperature across a hot day for several design versions">
+    <figcaption>Indoor air temperature across a hot day. Note the rural case is dominated by daytime relief and the urban case by night-time relief.</figcaption>
+  </figure>
+
+  <h2>Reflective roof coating</h2>
+  <p>Tested as a complement rather than a competitor, and the honest finding is that coating does more of the daytime work than the chimney does.</p>
+  <table>
+    <thead><tr><th>Fitted</th><th class="num">Peak of day</th><th class="num">Night average</th></tr></thead>
+    <tbody>
+      <tr><td>Reflective coating only</td><td class="num">6.0 K</td><td class="num">0.9 K</td></tr>
+      <tr><td>Chimney only</td><td class="num">5.2 K</td><td class="num">3.9 K</td></tr>
+      <tr><td>Both</td><td class="num hl">7.1 K</td><td class="num hl">3.9 K</td></tr>
+    </tbody>
+  </table>
+  <p>Coating blocks heat entering during the day but does almost nothing after dark, because there is no sunlight to reflect and the structure is still radiating stored heat inward. The chimney delivers its full night benefit regardless of roof colour.</p>
+
+  <h2>The finding that reorganised the project</h2>
+  <p>Three separate studies failed in the same direction, and a fourth explained why. Past roughly 25 air changes per hour the room stops responding to more airflow, because it settles where heat gain equals heat removed. Quadrupling the collector from 3 to 12&nbsp;m² buys 2.8&nbsp;K. Anything that only adds flow — storage, tilt, extra area, the glazing itself — runs into the same ceiling.</p>
+  <p>That one mechanism sized the collector at 3.0&nbsp;m² rather than 12, and it means the remaining gains have to come from reducing the heat entering the building rather than extracting air faster. It is also why reflective roof coating is part of the system rather than an optional extra. The full working is on the <a href="simulations.html">simulation studies</a> page.</p>
+
+  <h2>What did not work</h2>
+  <ul class="clean">
+    <li><strong>Phase change storage underperformed.</strong> Evening airflow improved by only about 6% versus the same chimney without PCM, and indoor temperature was identical to one decimal place. Sweeping 0 to 30&nbsp;kg moved it under 4% in total. The storage does function — the absorber sits at 37.4&nbsp;°C near midnight instead of 32.2&nbsp;°C — but the airflow it buys runs into the saturation ceiling above.</li>
+    <li><strong>The solar collector contributes less than expected.</strong> Against an identical unglazed duct with a white absorber, the glazed collector adds about 11% more airflow and essentially no extra temperature reduction. In a room at 59&nbsp;°C beside 44&nbsp;°C outdoor air, the building's own trapped heat is already driving most of the draft. The model has no reverse-flow term, which is the main way an unglazed duct would fail at night, so this measures daytime flow augmentation rather than whether the collector earns its place overall. Settling that is the prototype's job.</li>
+    <li><strong>Thermosiphon-driven vapour compression is impossible.</strong> Generating the pressure lift ammonia requires would need roughly 160&nbsp;m of liquid column, against the two metres a rooftop offers.</li>
+    <li><strong>Solar absorption chilling is real but unsuitable.</strong> It requires a sealed vacuum vessel, evacuated tube collectors and either toxic ammonia or methanol, failing the cost, safety and simplicity constraints this project is built around.</li>
+  </ul>
+
+  <h2>Limitations</h2>
+  <ul class="clean">
+    <li>No physical prototype yet; every figure is a modelled prediction</li>
+    <li>The model overpredicts against one of three validation studies</li>
+    <li>Worst-case figures assume a fully sealed room and are upper bounds, not typical readings</li>
+    <li>Cloudy monsoon conditions weaken solar input and therefore the draft</li>
+    <li>The chimney cannot cool air below outdoor temperature under any configuration</li>
+  </ul>
+</div>
+
+<footer class="site">Model code, design cases and exported data are public in this repository.</footer>

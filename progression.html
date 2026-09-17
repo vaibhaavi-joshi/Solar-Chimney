@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design progression</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg:#06100D;
+  --surface:#0C1A15;
+  --surface-2:#112620;
+  --line:#1C3A30;
+  --line-soft:#152C25;
+  --text:#E6F1EB;
+  --muted:#8AA89B;
+  --em:#34D399;
+  --em-dim:#10B981;
+  --em-glow:#6EE7B7;
+  --warn:#F0A54A;
+  --cool:#5AA9E6;
+  --violet:#A78BFA;
+  --stone:#94A39B;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Archivo',system-ui,-apple-system,sans-serif;
+  font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--em);text-decoration:none;}
+a:hover{color:var(--em-glow);text-decoration:underline;}
+::selection{background:var(--em-dim);color:#04120C;}
+
+/* ---------- top nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(6,16,13,.93);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:22px;
+  padding:0 22px;height:56px;
+}
+.nav .brand{
+  font-weight:800;letter-spacing:-.02em;font-size:16px;
+  color:var(--text);display:flex;align-items:center;gap:9px;white-space:nowrap;
+}
+.nav .brand:hover{text-decoration:none;color:var(--text);}
+.nav .dot{width:9px;height:9px;background:var(--em);border-radius:50%;
+  box-shadow:0 0 12px var(--em);flex:none;}
+.nav .links{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap;}
+.nav .links a{
+  font-size:13px;color:var(--muted);padding:7px 13px;border-radius:2px;
+}
+.nav .links a:hover{color:var(--text);background:var(--surface-2);text-decoration:none;}
+.nav .links a[aria-current=page]{color:var(--em);background:var(--surface-2);}
+@media(max-width:620px){
+  .nav{height:auto;padding:10px 14px;flex-wrap:wrap;gap:10px;}
+  .nav .links{margin-left:0;width:100%;}
+}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:36px 22px 80px;}
+.wrap.wide{max-width:1500px;}
+.page-head{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:30px;}
+.page-head .eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--em);margin-bottom:9px;
+}
+h1{font-size:clamp(28px,4.2vw,46px);font-weight:800;letter-spacing:-.03em;
+  margin:0 0 8px;line-height:1.08;}
+h2{font-size:21px;font-weight:700;letter-spacing:-.02em;margin:38px 0 14px;}
+h3{font-size:16px;font-weight:600;margin:0 0 6px;}
+.lede{font-size:16.5px;color:var(--muted);max-width:66ch;margin:0;}
+p{max-width:72ch;}
+.muted{color:var(--muted);}
+
+/* ---------- cards & stats ---------- */
+.card{background:var(--surface);border:1px solid var(--line);padding:18px 20px;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0;}
+.stat{background:var(--surface);padding:16px 18px;}
+.stat .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);}
+.stat .v{font-size:32px;font-weight:800;letter-spacing:-.035em;
+  font-variant-numeric:tabular-nums;margin-top:4px;line-height:1;color:var(--em);}
+.stat .v small{font-size:14px;font-weight:500;color:var(--muted);margin-left:3px;
+  letter-spacing:0;}
+.stat .n{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4;}
+.stat.hero .v{color:var(--em-glow);}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px;}
+th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line-soft);}
+th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);font-weight:500;
+  border-bottom:1px solid var(--line);}
+td.num{font-variant-numeric:tabular-nums;text-align:right;}
+tbody tr:hover{background:var(--surface);}
+.hl{color:var(--em);font-weight:600;}
+
+/* ---------- figures ---------- */
+figure{margin:24px 0;background:var(--surface);border:1px solid var(--line);padding:14px;}
+figure img{width:100%;display:block;background:#fff;}
+figcaption{font-size:12.5px;color:var(--muted);margin-top:11px;line-height:1.5;}
+
+/* ---------- controls ---------- */
+.seg{display:inline-flex;border:1px solid var(--line);background:var(--surface);}
+.seg button{font-family:inherit;font-size:12.5px;padding:8px 15px;background:transparent;
+  border:none;cursor:pointer;color:var(--muted);border-right:1px solid var(--line);}
+.seg button:last-child{border-right:none;}
+.seg button:hover{color:var(--text);}
+.seg button[aria-pressed=true]{background:var(--em-dim);color:#04120C;font-weight:600;}
+input[type=range]{width:100%;accent-color:var(--em);height:18px;background:transparent;}
+input[type=range]:focus-visible{outline:2px solid var(--em);outline-offset:3px;}
+.toggle{display:flex;align-items:center;gap:8px;font-size:12.5px;margin-bottom:8px;cursor:pointer;}
+.toggle input{accent-color:var(--em);width:14px;height:14px;cursor:pointer;}
+button.btn{font-family:inherit;font-size:12.5px;padding:7px 13px;cursor:pointer;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--text);}
+button.btn:hover{border-color:var(--em-dim);color:var(--em);}
+
+/* ---------- callouts ---------- */
+.note{border-left:3px solid var(--em);background:var(--surface);
+  padding:13px 16px;margin:20px 0;font-size:14px;}
+.note.warn{border-left-color:var(--warn);}
+.note strong{color:var(--em);}
+.note.warn strong{color:var(--warn);}
+
+/* ---------- misc ---------- */
+.mono{font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
+.pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+  letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;
+  border:1px solid var(--line);color:var(--muted);}
+.pill.on{border-color:var(--em-dim);color:var(--em);}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0;}
+footer.site{border-top:1px solid var(--line);margin-top:56px;padding:22px;
+  font-size:12.5px;color:var(--muted);text-align:center;}
+ul.clean{list-style:none;padding:0;margin:14px 0;}
+ul.clean li{padding:8px 0 8px 22px;position:relative;border-bottom:1px solid var(--line-soft);
+  font-size:14px;max-width:72ch;}
+ul.clean li:before{content:"";position:absolute;left:4px;top:15px;width:6px;height:6px;
+  background:var(--em-dim);border-radius:50%;}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:22px 0;}
+
+</style>
+<style>
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:1180px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}}
+  .card{background:var(--surface);border:1px solid var(--line);display:flex;
+    flex-direction:column;padding:0;}
+  .card .top{padding:12px 14px 10px;border-bottom:1px solid var(--line);}
+  .vtag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;
+    padding:2px 7px;color:#04120C;display:inline-block;margin-bottom:6px;}
+  .card h3{margin:0;font-size:15px;font-weight:600;letter-spacing:-.01em;}
+  .card .dims{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:3px;}
+  .cv{width:100%;aspect-ratio:1/0.92;display:block;background:#08150F;}
+  .nums{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);}
+  .nums div{padding:10px 13px;}
+  .nums div:first-child{border-right:1px solid var(--line);}
+  .nums .k{font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);}
+  .nums .v{font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;
+    letter-spacing:-.025em;color:var(--em);}
+  .nums .v small{font-size:11px;font-weight:500;color:var(--muted);}
+  .why{padding:11px 14px 14px;font-size:12px;line-height:1.55;color:var(--muted);
+    border-top:1px solid var(--line);}
+  .why b{color:var(--text);font-weight:600;}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;
+    flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:22px;}
+  footer#foot{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:11.5px;color:var(--muted);max-width:96ch;line-height:1.65;}
+</style>
+
+<nav class="nav">
+  <a class="brand" href="index.html"><span class="dot"></span>Solar Chimney</a>
+  <div class="links">
+    <a href="index.html">Overview</a>
+    <a href="model.html">Installation model</a>
+    <a href="progression.html" aria-current="page">Design progression</a>
+    <a href="simulations.html">Simulations</a>
+    <a href="results.html">Results &amp; method</a>
+  </div>
+</nav>
+<div class="wrap wide">
+<div class="head-row">
+  <div>
+    <h1>Design progression</h1>
+    <p class="sub">Four iterations, each run against the same room, the same weather and the same model. Drag any panel to orbit.</p>
+  </div>
+  <div class="seg" id="seg">
+    <button data-v="rural" aria-pressed="true">Rural · metal roof</button>
+    <button data-v="urban" aria-pressed="false">Urban · concrete roof</button>
+  </div>
+</div>
+<div class="grid" id="grid"></div>
+<footer id="foot"></footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const V=[
+ {id:"V1",name:"First guess",L:2.0,W:0.5,gap:0.20,tilt:45,coat:false,col:"#B9B0A3",
+  why:"<b>Sized by hand, not by the model.</b> A 2 × 0.5 m collector was picked as an example early on and never revisited. Only 1 m² of absorber, so there is very little heat going into the air.",
+  rural:{peak:5.2,night:1.3}, urban:{peak:1.1,night:3.2}},
+ {id:"V2",name:"Scaled up",L:3.0,W:1.5,gap:0.25,tilt:50,coat:false,col:"#2B6DB5",
+  why:"<b>Area turned out to dominate everything.</b> Going to 4.5 m² nearly doubled the temperature drop. But at 50° it stands 2.30 m above a 2.8 m house, so it almost doubles the building height.",
+  rural:{peak:10.1,night:2.4}, urban:{peak:2.7,night:6.8}},
+ {id:"V3",name:"Short and wide",L:1.5,W:2.0,gap:0.25,tilt:50,coat:false,col:"#E8801A",
+  why:"<b>The model overturned our assumption.</b> Friction scales with channel length over hydraulic diameter, so widening cuts resistance faster than lowering costs stack pressure. Half the height, a third less material, slightly better performance.",
+  rural:{peak:10.2,night:2.6}, urban:{peak:2.9,night:7.1}},
+ {id:"V4",name:"Plus reflective roof",L:1.5,W:2.0,gap:0.25,tilt:50,coat:true,col:"#0F766E",
+  why:"<b>The roof it sits on matters too.</b> Coating blocks heat entering during the day; the chimney removes what still gets in and keeps working after sunset, when coating does nothing. Night figures are unchanged, as expected.",
+  rural:{peak:12.8,night:2.6}, urban:{peak:4.6,night:7.1}}
+];
+const BASE={rural:{peak:59.0,night:36.5},urban:{peak:49.8,night:43.0}};
+let CASE="rural";
+const views=[];
+
+function makeCard(v){
+  const c=document.createElement('div');c.className='card';
+  c.innerHTML=`<div class="top">
+      <span class="vtag" style="background:${v.col}">${v.id}</span>
+      <h3>${v.name}</h3>
+      <div class="dims">${v.L} × ${v.W} m · ${(v.L*v.W).toFixed(1)} m² · ${(v.L*Math.sin(v.tilt*Math.PI/180)).toFixed(2)} m tall</div>
+    </div>
+    <canvas class="cv"></canvas>
+    <div class="nums">
+      <div><div class="k">Peak of day</div><div class="v" data-p>–</div></div>
+      <div><div class="k">Night average</div><div class="v" data-n>–</div></div>
+    </div>
+    <div class="why">${v.why}</div>`;
+  document.getElementById('grid').appendChild(c);
+  return c;
+}
+
+function buildScene(canvas,v){
+  const rn=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  rn.setPixelRatio(Math.min(devicePixelRatio,2));
+  const sc=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(38,1,.1,150);
+  const orb={r:11.5,th:0.78,ph:1.07};
+  const place=()=>{cam.position.set(orb.r*Math.sin(orb.ph)*Math.sin(orb.th),
+    orb.r*Math.cos(orb.ph),orb.r*Math.sin(orb.ph)*Math.cos(orb.th));cam.lookAt(0,1.6,0);};
+  sc.add(new THREE.AmbientLight(0xffffff,.66));
+  const sun=new THREE.DirectionalLight(0xfff1de,.95);sun.position.set(6,10,7);sc.add(sun);
+  const fill=new THREE.DirectionalLight(0xc2d7ef,.3);fill.position.set(-5,4,-6);sc.add(fill);
+  const gr=new THREE.Mesh(new THREE.PlaneGeometry(60,60),new THREE.MeshLambertMaterial({color:0x14302A}));
+  gr.rotation.x=-Math.PI/2;sc.add(gr);
+
+  const M={
+    wall:new THREE.MeshLambertMaterial({color:CASE==="urban"?0xA9755C:0xBFA98A}),
+    roofTin:new THREE.MeshPhongMaterial({color:0x8E9499,shininess:50}),
+    roofRcc:new THREE.MeshLambertMaterial({color:0x9C9890}),
+    white:new THREE.MeshLambertMaterial({color:0xF3F1EB}),
+    glass:new THREE.MeshPhongMaterial({color:0xA9D6F2,transparent:true,opacity:.3,shininess:100,side:THREE.DoubleSide}),
+    abs:new THREE.MeshLambertMaterial({color:0x191919}),
+    pcm:new THREE.MeshLambertMaterial({color:0x8E4EC6}),
+    insul:new THREE.MeshLambertMaterial({color:0xE4DCA6}),
+    alu:new THREE.MeshPhongMaterial({color:0xA8AEB4,shininess:70}),
+    wood:new THREE.MeshLambertMaterial({color:0x8A6A46}),
+  };
+  const HW=3.4,HD=3.4,HH=2.8,T=0.22;
+  const box=(w,h,d,x,y,z,m,g)=>{const s=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);
+    s.position.set(x,y,z);(g||sc).add(s);return s;};
+
+  box(T,HH,HD,-HW/2,HH/2,0,M.wall); box(T,HH,HD,HW/2,HH/2,0,M.wall);
+  box(HW,HH,T,0,HH/2,-HD/2,M.wall);
+  const dw=0.95;
+  box((HW-dw)/2,HH,T,-(dw+(HW-dw)/2)/2,HH/2,HD/2,M.wall);
+  box((HW-dw)/2,HH,T,(dw+(HW-dw)/2)/2,HH/2,HD/2,M.wall);
+  box(dw,HH-2.05,T,0,HH-(HH-2.05)/2,HD/2,M.wall);
+
+  const rm = v.coat?M.white:(CASE==="urban"?M.roofRcc:M.roofTin);
+  if(CASE==="urban"){
+    box(HW+.3,.13,HD+.3,0,HH+.065,0,rm);
+    box(HW+.3,.12,.1,0,HH+.19,HD/2+.1,rm); box(HW+.3,.12,.1,0,HH+.19,-HD/2-.1,rm);
+  }else{
+    const g=new THREE.Group();
+    for(let i=0;i<22;i++){const r=new THREE.Mesh(new THREE.BoxGeometry(.075,.045,HD+.45),rm);
+      r.position.set(-((HW+.4)/2)+i*((HW+.4)/21),HH+.075,0);g.add(r);}
+    const dk=new THREE.Mesh(new THREE.BoxGeometry(HW+.4,.03,HD+.45),rm);dk.position.set(0,HH+.04,0);g.add(dk);
+    g.rotation.x=-0.045;sc.add(g);
+    for(const z of [-HD/3,0,HD/3])box(HW+.2,.09,.09,0,HH-.06,z,M.wood);
+  }
+  // vent
+  box(.5,.3,.05,-0.8,.55,-HD/2-.09,new THREE.MeshLambertMaterial({color:0x2A2A28}));
+
+  // ---- chimney ----
+  const tilt=v.tilt*Math.PI/180;
+  const piv=new THREE.Group();
+  piv.position.set(0,HH+.14,HD/2-0.35);piv.rotation.x=-tilt;sc.add(piv);
+  const plate=(w,len,th,y,m)=>{const s=new THREE.Mesh(new THREE.BoxGeometry(w,th,len),m);
+    s.position.set(0,y,-len/2);piv.add(s);return s;};
+  let y=0;
+  plate(v.W,v.L,.02,y,M.alu);
+  y+=.035; plate(v.W,v.L,.05,y,M.insul);
+  y+=.04;
+  const nx=v.W>1.2?2:1, nz=2;
+  for(let a=0;a<nz;a++)for(let b=0;b<nx;b++){
+    const t=new THREE.Mesh(new THREE.BoxGeometry(v.W/nx-.06,.03,v.L/nz-.06),M.pcm);
+    t.position.set((b-(nx-1)/2)*(v.W/nx),y,-(a+.5)*(v.L/nz));piv.add(t);
+  }
+  y+=.03; plate(v.W,v.L,.008,y,M.abs);
+  y+=.008+v.gap; plate(v.W,v.L,.006,y,M.glass);
+  [-v.W/2,v.W/2].forEach(x=>{const s=new THREE.Mesh(new THREE.BoxGeometry(.02,y+.02,v.L),M.alu);
+    s.position.set(x,(y+.02)/2,-v.L/2);piv.add(s);});
+  const cap=new THREE.Mesh(new THREE.BoxGeometry(v.W+.22,.014,.34),M.alu);
+  cap.position.set(0,y+.16,-v.L-.05);piv.add(cap);
+  // kerb + struts
+  box(v.W+.3,.16,.5,0,HH+.06,HD/2-.35,M.wood);
+  const topY=HH+.14+v.L*Math.sin(tilt), topZ=HD/2-.35-v.L*Math.cos(tilt);
+  [-1,1].forEach(s=>{
+    const len=Math.hypot(topY-(HH+.1),Math.abs(topZ+.35));
+    const st=new THREE.Mesh(new THREE.BoxGeometry(.05,len,.05),M.alu);
+    st.position.set(s*(v.W/2-.05),(topY+HH+.1)/2,(topZ-.35)/2);
+    st.rotation.x=Math.atan2(topZ+.35,topY-(HH+.1))*-1+Math.PI;sc.add(st);
+  });
+  // human figure for scale
+  const hm=new THREE.Group();
+  const skin=new THREE.MeshLambertMaterial({color:0x6B5A4A});
+  const b1=new THREE.Mesh(new THREE.CylinderGeometry(.16,.19,1.05,10),skin);b1.position.y=.85;hm.add(b1);
+  const hd=new THREE.Mesh(new THREE.SphereGeometry(.13,12,12),skin);hd.position.y=1.5;hm.add(hd);
+  [-1,1].forEach(s=>{const lg=new THREE.Mesh(new THREE.CylinderGeometry(.07,.06,.8,8),skin);
+    lg.position.set(s*.09,.4,0);hm.add(lg);});
+  hm.position.set(HW/2+1.15,0,HD/2+0.35);sc.add(hm);
+
+  let dg=false,px=0,py=0;
+  canvas.addEventListener('pointerdown',e=>{dg=true;px=e.clientX;py=e.clientY;canvas.setPointerCapture(e.pointerId);});
+  canvas.addEventListener('pointerup',()=>dg=false);
+  canvas.addEventListener('pointermove',e=>{if(!dg)return;
+    orb.th-=(e.clientX-px)*.008;orb.ph=Math.max(.25,Math.min(1.45,orb.ph-(e.clientY-py)*.006));
+    px=e.clientX;py=e.clientY;place();});
+  canvas.addEventListener('wheel',e=>{e.preventDefault();
+    orb.r=Math.max(6,Math.min(24,orb.r+e.deltaY*.006));place();},{passive:false});
+
+  function size(){const w=canvas.clientWidth,h=canvas.clientHeight;
+    if(!w||!h)return; rn.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  place();size();
+  return {render:()=>{size();rn.render(sc,cam);}};
+}
+
+function build(){
+  document.getElementById('grid').innerHTML='';views.length=0;
+  V.forEach(v=>{
+    const card=makeCard(v);
+    const d=v[CASE];
+    card.querySelector('[data-p]').innerHTML=`−${d.peak.toFixed(1)}<small> K</small>`;
+    card.querySelector('[data-n]').innerHTML=`−${d.night.toFixed(1)}<small> K</small>`;
+    views.push(buildScene(card.querySelector('canvas'),v));
+  });
+  const b=BASE[CASE];
+  document.getElementById('foot').innerHTML=
+    `All four versions simulated under identical conditions: a 3 × 3 m single room with a 2.8 m ceiling and five occupants, on a hot day of 44 °C maximum and 31 °C minimum, which meets the IMD heatwave threshold. Reductions are measured against the same room with no chimney fitted, which peaks at ${b.peak.toFixed(1)} °C with a night average of ${b.night.toFixed(1)} °C. Figures come from a transient energy-balance model validated against published experimental data before use. V4 adds a reflective roof coating rather than changing the chimney itself. The human figure is 1.7 m for scale.`;
+}
+document.querySelectorAll('#seg button').forEach(b=>b.addEventListener('click',()=>{
+  CASE=b.dataset.v;document.querySelectorAll('#seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));build();}));
+function loop(){views.forEach(v=>v.render());requestAnimationFrame(loop);}
+build();loop();
+</script>
